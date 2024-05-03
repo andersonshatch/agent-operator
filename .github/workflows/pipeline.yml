@@ -44,7 +44,7 @@ jobs:
     outputs:
       digest: ${{ steps.build.outputs.digest }}
     env:
-      IMAGE_NAME: ghcr.io/contrast-security-oss/agent-operator/operator
+      IMAGE_NAME: ghcr.io/${{ github.repository }}/operator
       BUILD_VERSION: ${{ needs.generate-version.outputs.version }}
       IS_PUBLIC_BUILD: ${{ needs.generate-version.outputs.is-public-build }}
     steps:
@@ -177,7 +177,7 @@ jobs:
           - 1.25 # EOL: 2023-10-28
       fail-fast: false
     env:
-      IMAGE: ghcr.io/contrast-security-oss/agent-operator/operator@${{ needs.build-image.outputs.digest }}
+      IMAGE: ghcr.io/${{ github.repository }}/operator@${{ needs.build-image.outputs.digest }}
     if: ${{ github.event_name != 'pull_request' }} # should match push logic in build-image
     steps:
       - uses: actions/checkout@v4
