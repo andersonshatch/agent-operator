@@ -425,7 +425,7 @@ jobs:
             quay.io/contrast/agent-operator:${{ env.BUILD_VERSION }}
             quay.io/contrast/agent-operator@${{ needs.build-image.outputs.digest }}
             ```
-          artifacts: ${{ steps.download-artifacts.outputs.download-path }}/*.yaml
+          artifacts: ${{ steps.download-artifacts.outputs.download-path }}/*.yaml,manifests/helm/values.yaml
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
       - name: Publish Helm Chart
