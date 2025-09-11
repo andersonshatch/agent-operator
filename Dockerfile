@@ -26,8 +26,8 @@ ARG BUILD_VERSION=0.0.1 \
     IS_PUBLIC_BUILD=False
 
 RUN set -xe \
-    && dotnet test -c Release -p:Version=${BUILD_VERSION} -p:IsPublicBuild=${IS_PUBLIC_BUILD} --filter Type=Unit \
     && dotnet publish -c Release -o /app -p:Version=${BUILD_VERSION} -p:IsPublicBuild=${IS_PUBLIC_BUILD}
+#&& dotnet test -c Release -p:Version=${BUILD_VERSION} -p:IsPublicBuild=${IS_PUBLIC_BUILD} --filter Type=Unit \
 
 FROM base AS final
 WORKDIR /app

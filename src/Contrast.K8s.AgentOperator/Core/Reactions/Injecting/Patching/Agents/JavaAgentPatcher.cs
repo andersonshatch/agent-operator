@@ -70,7 +70,7 @@ public class JavaAgentPatcher : IAgentPatcher
         return collection.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
     }
 
-    private static string GetContrastAgentArgument(PatchingContext context) => $"-javaagent:{context.AgentMountPath}/contrast-agent.jar";
+    private static string GetContrastAgentArgument(PatchingContext context) => $"-javaagent:{context.AgentMountPath}/contrast/contrast-agent.jar";
 
-    public string GetOverrideAgentMountPath() => "/opt/contrast";
+    public string GetOverrideAgentMountPath() => "/opt/contrast/";
 }

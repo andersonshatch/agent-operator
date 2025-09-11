@@ -82,10 +82,21 @@ public class PodPatcher : IPodPatcher
 
         // Volumes.
         pod.Spec.Volumes ??= new List<V1Volume>();
-        var agentVolume = new V1Volume("contrast-agent")
+        V1Volume agentVolume;
+        if (false)
         {
-            EmptyDir = new V1EmptyDirVolumeSource()
-        };
+            agentVolume = new V1Volume("contrast-agent")
+            {
+                EmptyDir = new V1EmptyDirVolumeSource()
+            };
+        }
+        else
+        {
+            agentVolume = new V1Volume("contrast-agent")
+            {
+                Image = new V1ImageVolumeSource(context.Injector.ImagePullPolicy, context.Injector.Image.GetFullyQualifiedContainerImageName())
+            };
+        }
         pod.Spec.Volumes.AddOrUpdate(agentVolume.Name, agentVolume);
 
         var writableVolume = new V1Volume("contrast-writable")
@@ -108,6 +119,7 @@ public class PodPatcher : IPodPatcher
         }
 
         // Init Container.
+        if (false) //TODO config required
         {
             var podSecurityContext = (V1PodSecurityContext?)pod.Spec.SecurityContext;
             var containerSecurityContext = pod.Spec.Containers.FirstOrDefault()?.SecurityContext;
@@ -135,6 +147,11 @@ public class PodPatcher : IPodPatcher
 
             var agentVolumeMount = new V1VolumeMount(context.AgentMountPath, agentVolume.Name, readOnlyProperty: true);
             container.VolumeMounts.AddOrUpdate(agentVolumeMount.Name, agentVolumeMount);
+
+            if (true)
+            {
+                agentVolumeMount.SubPath = "contrast";
+            }
 
             var writableVolumeMount =
                 new V1VolumeMount(context.WritableMountPath, writableVolume.Name, readOnlyProperty: false);

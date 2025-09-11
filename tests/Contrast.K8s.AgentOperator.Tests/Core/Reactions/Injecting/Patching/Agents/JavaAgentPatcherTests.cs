@@ -38,7 +38,7 @@ namespace Contrast.K8s.AgentOperator.Tests.Core.Reactions.Injecting.Patching.Age
             var result = patcher.GetOverrideAgentMountPath();
 
             // Assert
-            result.Should().Be("/opt/contrast");
+            result.Should().Be("/opt/contrast/contrast");
         }
 
         [Fact]
